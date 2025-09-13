@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../css/teacher/courses.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">📘 Sikho Bharat</div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="./courses.html">Courses</a></li>
+          <li><a href="#">Languages</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </nav>
+
+      <div class="avatar"></div>
+    </header>
+
+    <main>
+      <div class="main-header">
+        <button class="add-btn">+ Add Course</button>
+      </div>
+
+      <h2>All Courses</h2>
+      <div class="courses-container"></div>
+    </main>
+
+    <!-- Modal / Overlay -->
+    <div id="overlay" class="overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Create Course</h3>
+          <button id="close-modal" class="close-btn">&times;</button>
+        </div>
+
+        <form
+          id="course-form"
+          class="course-form"
+          enctype="multipart/form-data"
+        >
+          <label>Course Name</label>
+          <input type="text" name="title" id="title" required />
+
+          <label>Description</label>
+          <textarea
+            name="description"
+            id="description"
+            rows="3"
+            required
+          ></textarea>
+
+          <label>Category</label>
+          <input
+            type="text"
+            name="category"
+            id="category"
+            placeholder="e.g. Programming"
+          />
+
+          <label>Level</label>
+          <select name="level" id="level">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advance">Advance</option>
+          </select>
+
+          <label>Duration (weeks)</label>
+          <input type="number" name="duration" id="duration" min="1" />
+
+          <label>Price (₹)</label>
+          <input type="number" name="price" id="price" min="0" />
+
+          <label>Course Image</label>
+          <input type="file" name="image" id="image" accept="image/*" />
+
+          <label>Promo Video (optional) — URL</label>
+          <input type="file" name="video" id="video" accept="video/*" />
+
+          <div class="form-actions">
+            <button type="button" id="cancel-btn" class="btn-secondary">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function show_avatar() {
+        let name = localStorage.getItem("name");
+
+        if (name) {
+          let avatar = document.querySelector(".avatar");
+          avatar.innerHTML = `${name.charAt(0).toUpperCase()}`;
+        }
+      }
+
+      show_avatar();
+
+      let add_btn = document.querySelector(".add-btn");
+      add_btn.addEventListener("click", (e) => {
+        let overlay = document.querySelector("#overlay");
+        overlay.classList.remove("hidden");
+      });
+
+      let close_btn = document.querySelector(".close-btn");
+      close_btn.addEventListener("click", (e) => {
+        let overlay = document.querySelector("#overlay");
+        overlay.classList.add("hidden");
+      });
+
+      const course_form = document.querySelector("#course-form");
+      course_form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(course_form);
+
+        const response = await fetch(
+          "http://localhost:3000/teacher/courses/create_course",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const result = response.json();
+        console.log("result", result);
+
+        if (result.success) {
+        }
+      });
+
+      async function load_courses() {
+        const response = await fetch(
+          "http://localhost:3000/teacher/courses/getCourses"
+        );
+        const { data } = await response.json();
+        const courses = data;
+
+        console.log(courses);
+
+        let courseHTML = "";
+        const courses_container = document.querySelector(".courses-container");
+        courses.forEach((course) => {
+          courseHTML += `
+            <div class="course-card">
+              <img
+                src="https://via.placeholder.com/300x180"
+                alt="Course Image"
+                class="course-image"
+              />
+              <div class="course-content">
+                <h2 class="course-title">${course.title}</h2>
+                <p class="course-description">
+                  ${course.description}
+                </p>
+                <p class="course-category">
+                  <strong>Category:</strong> ${course.category}
+                </p>
+                <p class="course-level">
+                  <strong>Level:</strong> ${course.level}
+                </p>
+                <p class="course-duration">
+                  <strong>Duration:</strong> ${course.duration} Hours
+                </p>
+                <p class="course-price">
+                  <strong>Price:</strong> ₹${course.price}
+                </p>
+              </div>
+            </div>
+          `;
+        });
+        courses_container.innerHTML = courseHTML;
+      }
+      load_courses();
+    </script>
+  </body>
+</html>
