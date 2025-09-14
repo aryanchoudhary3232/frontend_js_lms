@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Video</h1>
+    <video id="video" controls></video>
+
+    <script>
+      console.log(window.location.search);
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoUrl = urlParams.get("videoUrl");
+      console.log(videoUrl);
+
+      const video = document.querySelector("#video");
+      video.src = decodeURIComponent(videoUrl);
+    </script>
+  </body>
+</html>

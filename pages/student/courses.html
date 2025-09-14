@@ -22,10 +22,6 @@
     </header>
 
     <main>
-      <div class="main-header">
-        <button class="add-btn">+ Add Course</button>
-      </div>
-
       <h2>All Courses</h2>
       <div class="courses-container"></div>
     </main>
@@ -102,38 +98,6 @@
       }
 
       show_avatar();
-
-      let add_btn = document.querySelector(".add-btn");
-      add_btn.addEventListener("click", (e) => {
-        let overlay = document.querySelector("#overlay");
-        overlay.classList.remove("hidden");
-      });
-
-      let close_btn = document.querySelector(".close-btn");
-      close_btn.addEventListener("click", (e) => {
-        let overlay = document.querySelector("#overlay");
-        overlay.classList.add("hidden");
-      });
-
-      const course_form = document.querySelector("#course-form");
-      course_form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(course_form);
-
-        const response = await fetch(
-          "http://localhost:3000/teacher/courses/create_course",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-        const result = await response.json();
-        console.log("result", result);
-
-        if (result.success) {
-        }
-      });
 
       async function load_courses() {
         const response = await fetch(

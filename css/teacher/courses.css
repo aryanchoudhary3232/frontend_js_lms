@@ -89,6 +89,7 @@ main h2 {
   margin: 0 auto;
 }
 
+/* course card  */
 .course-card {
   background: white;
   color: #2337ad;
@@ -117,6 +118,71 @@ main h2 {
   font-size: 13px;
   color: #555;
 }
+
+.course-card {
+  width: 320px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  transition: transform 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.course-card:hover {
+  transform: translateY(-8px);
+}
+
+.course-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.course-content {
+  padding: 16px;
+}
+
+.course-title {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.course-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.course-category,
+.course-level,
+.course-duration,
+.course-price {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #444;
+}
+
+.enroll-btn {
+  display: block;
+  width: 100%;
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.enroll-btn:hover {
+  background: #574bd6;
+}
+
 
 /* ---------- Overlay & Modal ---------- */
 .overlay {
